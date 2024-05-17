@@ -1,0 +1,82 @@
+body {
+    background-image: url(img/fundo22.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+}
+
+.contato {
+    background-color: #07164e;
+    color: rgb(177, 177, 20);
+    font-size: x-large;
+    height: 60px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+span {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#formulario {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: calc(100% - 40px);
+}
+
+#mensagem {
+    width: calc(100% - 60px);
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+.botao {
+    background-color: transparent;
+    border: 0;
+    height: 50px;
+}
+
+.container {
+    border-radius: 5px;
+    margin: 15px;
+}
+
+li {
+    list-style-type: none;
+    color: black;
+    background-color: #ffffff9d;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+    align-self: flex-start; /* Default align to the left */
+}
+
+#mensagens {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    border-radius: 50px;
+}
+
+#mensagens-container {
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+}
+
+.direita {
+    color: rgb(14, 16, 138);
+    background-color: #fffedc;
+    align-self: flex-end; /* Align to the right for sent messages */
+}
+input{
+    border-radius: 23px;
+    padding: 10px;
+    border-color: rgb(192, 179, 0);
+}

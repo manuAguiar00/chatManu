@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bate-papo Node.Js e Socket.io</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+
+    <header>
+        <div class="contato">
+            <img src="img/botao-voltar.png" alt="">
+            <span id="nomeUsuario"></span>
+            <input style=" color: black;" type="text" id="nome" placeholder="Seu nome de usuário">
+            <img style="height: 35px;" src="img/video-chamada.png" alt="">
+            <img style="height: 35px;" src="img/telefone.png" alt="">
+            <img style="height: 35px;" src="img/pontos.png" alt="">
+        </div>
+    </header>
+
+    <main>
+        <div id="mensagens-container">
+            <ul class="container" id="mensagens"></ul>
+        </div>
+        <div id="formulario">
+            <form>
+                <input type="text" id="mensagem" placeholder="Sua mensagem">
+                <button type="submit" class="botao"><img src="img/enviar.png" style="height: 20px;" alt=""></button>
+            </form>
+        </div>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // Sorteio
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        var idSorteio = getRandomInt(1, 10000);
+
+        console.log(idSorteio);
+
+        // Criar uma instância do socket.io
+        const socket = io();
+        const nomeInput = document.getElementById('nome');
+        const mensagemInput = document.getElementById('mensagem');
+        const mensagens = document.getElementById('mensagens');
+
+        document.querySelector('form').addEventListener('submit', event => {
+            // Padrão de envios
+            event.preventDefault();
+
+            const nome = nomeInput.value;
+            const mensagem = mensagemInput.value;
+
+            // Verificar se os valores estão em branco
+            if (nome.trim() && mensagem.trim()) {
+                socket.emit('chat message', { nome, mensagem, idSorteio });
+                // Limpar o input da mensagem
+                mensagemInput.value = '';
+                // Oculta o input do usuário
+                nomeInput.style.display = 'none';
+
+                // Exibir o nome do usuário na barra de cabeçalho
+                const nomeUsuarioSpan = document.getElementById('nomeUsuario');
+                nomeUsuarioSpan.textContent = nome;
+            }
+        });
+
+        socket.on('chat message', dados => {
+            const lista = document.createElement('li');
+            lista.textContent = `${dados.nome}: ${dados.mensagem}`;
+            if (idSorteio === dados.idSorteio) { // Enviada
+                lista.className = 'direita';
+            }
+            mensagens.appendChild(lista);
+            mensagens.scrollTop = mensagens.scrollHeight; // Rolagem automática para a última mensagem
+        });
+    </script>
+
+</body>
+</html>
